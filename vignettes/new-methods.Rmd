@@ -1,0 +1,114 @@
+---
+title: "New Methods for Lattice"
+subtitle: "tactile"
+author: "Johan Larsson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{New Methods for Lattice}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## `xyplot.lm()`: Linear model diagnostics 
+
+tactile provides an `xyplot()` method for `lm` objects -- usually generated
+with `stats::lm()` or `stats::glm()`. It provides the same type of diagnostic
+plots that `stats::plot.lm()` covers, with some small modificiations.
+
+This method is provided so that a user may use lattice graphics throughout out a
+document, say for a lab report, and produce consistent graphic material that
+can be changed on a general level (for instance by using `lattice.options()`).
+
+### Usage
+
+We fit a simple linear model
+
+```{r}
+fit <- lm(Sepal.Length ~ Sepal.Width, data = iris)
+```
+
+Here, we fist use the default option and plot the diagnostics using 
+`stats::plot()`
+
+```{r, fig.cap = "Plot diagnostics with `stats::plot.lm()`.", fig.width = 6, fig.height = 9.5}
+par(mfrow = c(3, 2), cex = 1)
+plot(fit, which = 1:6)
+par(mfrow = c(1, 1))
+```
+
+Or instead use the method provided by tactile.
+
+```{r, fig.cap = "Plot diagnostics with `xyplot.lm()`.", fig.width = 6, fig.height = 9.5}
+library(tactile)
+xyplot(fit, which = 1:6)
+```
+
+You will see that the results are similar. The benefits, however, of using
+`xyplot.lm()` from tactile are that
+
+* handling of plot margins is much improved,
+* the plots are returned as a list of trellis objects (that can be updated),
+* general plot settings from `lattice` are respected (mostly), and
+* you no longer have to specify `par(mfrow = c(2, 2))`. The plots are arranged
+via `gridExtra::grid.arrange()` automatically and arguments `nrow` and `ncol`
+have been made accessible in the `xyplot.lm()` call to enable manual
+specifications.
+
+## `xyplot.Arima`: ARIMA Model Diagnostics
+
+This function is similar to `xyplot.lm()` but is modelled after
+`stats::tsdiag()`. First, we look at the output from the original.
+
+```{r, fig.height = 6, fig.width = 4}
+fit <- arima(lh, c(0, 0, 1))
+tsdiag(fit)
+```
+
+To use the method from tactile, we just call `xyplot()` on the model fit. The
+most prominent difference here is that we've added a Q-Q plot of the
+standardized residuals as well, but also that we're correcting the 
+the Ljung--Box test to account for the fact that we've fit a model
+([see this](http://www.stat.pitt.edu/stoffer/tsa4/Rissues.htm)).
+
+```{r, fig.width = 7, fig.height = 5}
+xyplot(fit)
+```
+
+## `xyplot.forecast()`: Plotting forecasts with tactile
+
+Robert Hyndman's excellent
+[forecast](https://cran.r-project.org/package=forecast) package has built-in
+functions for plotting forecasts. These have been reworked to use lattice
+graphics in tactile, and also try to place the forecasts on the time
+scale of the original data (if such is provided).
+
+For this example, we user `USAccDeaths`, a time series giving the monthly totals
+of accidental deaths in the USA. We begin by separating the series into
+a training and test set.
+
+```{r}
+library(forecast)
+train <- window(USAccDeaths, c(1973, 1), c(1977, 12))
+test <- window(USAccDeaths, c(1978, 1), c(1978, 12))
+```
+
+Then we fit the model and plot the results.
+
+```{r, fig.width = 6, fig.height = 3}
+fit <- arima(train, order = c(0, 1, 1), seasonal = list(order = c(0, 1, 1)))
+fcast1 <- forecast(fit, 12)
+xyplot(fcast1, test, grid = TRUE, auto.key = list(corner = c(0, 0.99)),
+       ci_key = list(title = "PI Level"))
+```
+
+A so called fan plot can be achieved by increasing the number of prediction
+intervals in the call to `forecast`. We also switch to a separate 
+color palette by using the `ci_pal` argument.
+
+```{r, fig.width = 6, fig.height = 3}
+# A fan plot
+fcast2 <- forecast(fit, 12, level = seq(0, 95, 10))
+xyplot(fcast2, test, ci_pal = heat.colors(100))
+```
+
