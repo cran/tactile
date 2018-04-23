@@ -1,9 +1,10 @@
 Package: tactile
 Title: New and Extended Plots, Methods, and Panel Functions for
         'lattice'
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(person("Johan", "Larsson", email = "johanlarsson@outlook.com",
-                    role = c("aut", "cre")),
+                    role = c("aut", "cre"),
+                    comment = c(ORCID = "0000-0002-4029-5945")),
              person("Deepayan", "Sarkar", role = c("ctb", "cph"),
                     comment = "lattice"),
              person("Brian", "Ripley", role = c("ctb"),
@@ -22,10 +23,10 @@ URL: https://github.com/jolars/tactile
 BugReports: https://github.com/jolars/tactile/issues
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2017-11-15 15:04:07 UTC; johan
-Author: Johan Larsson [aut, cre],
+Packaged: 2018-04-23 16:31:53 UTC; jolars
+Author: Johan Larsson [aut, cre] (<https://orcid.org/0000-0002-4029-5945>),
   Deepayan Sarkar [ctb, cph] (lattice),
   Brian Ripley [ctb] (stats::plot.acf)
 Maintainer: Johan Larsson <johanlarsson@outlook.com>
 Repository: CRAN
-Date/Publication: 2017-11-15 15:33:40 UTC
+Date/Publication: 2018-04-23 16:45:09 UTC

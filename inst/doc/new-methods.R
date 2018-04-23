@@ -1,3 +1,11 @@
+## ----setup, include = FALSE----------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 4,
+  fig.height = 3.2
+)
+
 ## ------------------------------------------------------------------------
 fit <- lm(Sepal.Length ~ Sepal.Width, data = iris)
 
