@@ -23,9 +23,9 @@ knitr::opts_chunk$set(
 
 tactile provides an `xyplot()` method for `lm` objects -- usually generated
 with `stats::lm()` or `stats::glm()`. It provides the same type of diagnostic
-plots that `stats::plot.lm()` covers, with some small modificiations.
-
+plots that `stats::plot.lm()` covers, with some small modifications
 This method is provided so that a user may use lattice graphics throughout out a
+
 document, say for a lab report, and produce consistent graphic material that
 can be changed on a general level (for instance by using `lattice.options()`).
 
@@ -66,7 +66,7 @@ specifications.
 
 ## `xyplot.Arima`: ARIMA Model Diagnostics
 
-This function is similar to `xyplot.lm()` but is modelled after
+This function is similar to `xyplot.lm()` but is modeled after
 `stats::tsdiag()`. First, we look at the output from the original.
 
 ```{r, fig.height = 6, fig.width = 4}
@@ -76,7 +76,7 @@ tsdiag(fit)
 
 To use the method from tactile, we just call `xyplot()` on the model fit. The
 most prominent difference here is that we've added a Q-Q plot of the
-standardized residuals as well, but also that we're correcting the 
+standardized residuals as well, but also that we're correcting
 the Ljung--Box test to account for the fact that we've fit a model
 ([see this](http://www.stat.pitt.edu/stoffer/tsa4/Rissues.htm)).
 
@@ -107,8 +107,10 @@ Then we fit the model and plot the results.
 ```{r, fig.width = 6, fig.height = 3}
 fit <- arima(train, order = c(0, 1, 1), seasonal = list(order = c(0, 1, 1)))
 fcast1 <- forecast(fit, 12)
-xyplot(fcast1, test, grid = TRUE, auto.key = list(corner = c(0, 0.99)),
-       ci_key = list(title = "PI Level"))
+xyplot(fcast1, test,
+  grid = TRUE, auto.key = list(corner = c(0, 0.99)),
+  ci_key = list(title = "PI Level")
+)
 ```
 
 A so called fan plot can be achieved by increasing the number of prediction

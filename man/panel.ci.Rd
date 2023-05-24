@@ -4,48 +4,45 @@
 \alias{panel.ci}
 \title{Panel function for confidence interval}
 \usage{
-panel.ci(x, y, lower, upper, groups = NULL, subscripts, col, fill = if
-  (is.null(groups)) plot.line$col else superpose.line$col, alpha = 0.15,
-  lty = 0, lwd = if (is.null(groups)) plot.line$lwd else superpose.line$lwd,
-  grid = FALSE, ..., col.line = if (is.null(groups)) plot.line$col else
-  superpose.line$col)
+panel.ci(
+  x,
+  y,
+  lower,
+  upper,
+  groups = NULL,
+  subscripts,
+  col,
+  fill = if (is.null(groups)) plot.line$col else superpose.line$col,
+  alpha = 0.15,
+  lty = 0,
+  lwd = if (is.null(groups)) plot.line$lwd else superpose.line$lwd,
+  grid = FALSE,
+  ...,
+  col.line = if (is.null(groups)) plot.line$col else superpose.line$col
+)
 }
 \arguments{
-\item{x}{ variables to be plotted in the scatterplot}
-
-\item{y}{ variables to be plotted in the scatterplot}
+\item{x, y}{ variables to be plotted in the scatterplot }
 
 \item{lower}{lower confidence limits}
 
 \item{upper}{upper confidence limits}
 
 \item{groups}{ an optional grouping variable.  If present,
-    \code{\link{panel.superpose}} will be used instead to display each
+    \code{\link[lattice]{panel.superpose}} will be used instead to display each
     subgroup }
 
 \item{subscripts}{see \code{\link[lattice:xyplot]{lattice::xyplot()}}}
 
-\item{col}{
-    default colours are obtained from \code{plot.symbol} and
-    \code{plot.line} using \code{\link{trellis.par.get}}.
-  }
+\item{col}{line color}
 
-\item{fill}{
-    other graphical parameters.  \code{fill} serves the purpose of
-    \code{bg} in \code{\link{points}} for certain values of \code{pch}
-  }
+\item{fill}{fill color}
 
 \item{alpha}{opacity for the fill}
 
-\item{lty}{
-    other graphical parameters.  \code{fill} serves the purpose of
-    \code{bg} in \code{\link{points}} for certain values of \code{pch}
-  }
+\item{lty}{line type}
 
-\item{lwd}{
-    other graphical parameters.  \code{fill} serves the purpose of
-    \code{bg} in \code{\link{points}} for certain values of \code{pch}
-  }
+\item{lwd}{line width}
 
 \item{grid}{
     A logical flag, character string, or list specifying whether and how
@@ -56,7 +53,7 @@ panel.ci(x, y, lower, upper, groups = NULL, subscripts, col, fill = if
     \code{grid} argument also allows more flexibility.
 
     Most generally, \code{grid} can be a list of arguments to be
-    supplied to \code{\link{panel.grid}}, which is called with those
+    supplied to \code{\link[lattice]{panel.grid}}, which is called with those
     arguments.  Three shortcuts are available:
     \describe{
       \item{\code{TRUE}:}{ roughly equivalent to \code{list(h = -1, v = -1)} }
@@ -67,35 +64,36 @@ panel.ci(x, y, lower, upper, groups = NULL, subscripts, col, fill = if
   }
 
 \item{...}{
-    Extra arguments, if any, for \code{panel.xyplot}.  In most cases
-    \code{panel.xyplot} ignores these.  For types "r" and "smooth",
-    these are passed on to \code{panel.lmline} and \code{panel.loess}
-    respectively.
+    Extra arguments, if any, for \code{panel.xyplot}.  Usually passed on
+    as graphical parameters to low level plotting functions, or to the
+    panel functions performing smoothing, if applicable.
   }
 
-\item{col.line}{
-    default colours are obtained from \code{plot.symbol} and
-    \code{plot.line} using \code{\link{trellis.par.get}}.
-  }
+\item{col.line}{line color. Supersedes \code{col} if both are specified.}
 }
 \description{
 Panel function for confidence interval
 }
 \examples{
-mod <- lm(Petal.Width ~ Petal.Length*Species, data = iris)
-newdat <- expand.grid(Petal.Length = seq(1, 7, by = 0.1),
-                      Species = c("setosa", "versicolor", "virginica"))
+mod <- lm(Petal.Width ~ Petal.Length * Species, data = iris)
+newdat <- expand.grid(
+  Petal.Length = seq(1, 7, by = 0.1),
+  Species = c("setosa", "versicolor", "virginica")
+)
 pred <- predict(mod, newdat, interval = "confidence")
 dd <- cbind(newdat, pred)
 
-xyplot(fit ~ Petal.Length, groups = Species, data = dd,
-       prepanel = prepanel.ci, auto.key = list(lines = TRUE, points = FALSE),
-       ylab = "Petal Width",
-       xlab = "Petal Length",
-       lower = dd$lwr, upper = dd$upr, type = "l",
-       panel = function(...) {
-         panel.ci(..., alpha = 0.15, grid = TRUE)
-         panel.xyplot(...)
-       })
+xyplot(
+  fit ~ Petal.Length,
+  groups = Species, data = dd,
+  prepanel = prepanel.ci, auto.key = list(lines = TRUE, points = FALSE),
+  ylab = "Petal Width",
+  xlab = "Petal Length",
+  lower = dd$lwr, upper = dd$upr, type = "l",
+  panel = function(...) {
+    panel.ci(..., alpha = 0.15, grid = TRUE)
+    panel.xyplot(...)
+  }
+)
 
 }

@@ -7,19 +7,13 @@
 prepanel.ci(x, y, lower, upper, subscripts, groups = NULL, ...)
 }
 \arguments{
-\item{x}{x and y values, numeric or factor}
-
-\item{y}{x and y values, numeric or factor}
+\item{x, y}{x and y values, numeric or factor}
 
 \item{lower}{lower confidence limits}
 
 \item{upper}{upper confidence limits}
 
-\item{subscripts}{ See \code{\link{xyplot}}.  Whenever
-    appropriate, calculations are done separately for each group and
-    then combined.  }
-
-\item{groups}{ See \code{\link{xyplot}}.  Whenever
+\item{groups, subscripts}{ See \code{\link[lattice]{xyplot}}.  Whenever
     appropriate, calculations are done separately for each group and
     then combined.  }
 
@@ -29,20 +23,25 @@ prepanel.ci(x, y, lower, upper, subscripts, groups = NULL, ...)
 Prepanel for ciplot
 }
 \examples{
-mod <- lm(Petal.Width ~ Petal.Length*Species, data = iris)
-newdat <- expand.grid(Petal.Length = seq(1, 7, by = 0.1),
-                      Species = c("setosa", "versicolor", "virginica"))
+mod <- lm(Petal.Width ~ Petal.Length * Species, data = iris)
+newdat <- expand.grid(
+  Petal.Length = seq(1, 7, by = 0.1),
+  Species = c("setosa", "versicolor", "virginica")
+)
 pred <- predict(mod, newdat, interval = "confidence")
 dd <- cbind(newdat, pred)
 
-xyplot(fit ~ Petal.Length, groups = Species, data = dd,
-       prepanel = prepanel.ci,
-       ylab = "Petal Width",
-       xlab = "Petal Length",
-       lower = dd$lwr, upper = dd$upr, alpha = 0.3,
-       panel = function(...) {
-         panel.ci(..., grid = TRUE)
-         panel.xyplot(type = "l", ...)
-       })
+xyplot(
+  fit ~ Petal.Length,
+  groups = Species, data = dd,
+  prepanel = prepanel.ci,
+  ylab = "Petal Width",
+  xlab = "Petal Length",
+  lower = dd$lwr, upper = dd$upr, alpha = 0.3,
+  panel = function(...) {
+    panel.ci(..., grid = TRUE)
+    panel.xyplot(type = "l", ...)
+  }
+)
 
 }

@@ -1,7 +1,7 @@
 Package: tactile
 Title: New and Extended Plots, Methods, and Panel Functions for
         'lattice'
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(person("Johan", "Larsson", email = "johanlarsson@outlook.com",
                     role = c("aut", "cre"),
                     comment = c(ORCID = "0000-0002-4029-5945")),
@@ -10,23 +10,24 @@ Authors@R: c(person("Johan", "Larsson", email = "johanlarsson@outlook.com",
              person("Brian", "Ripley", role = c("ctb"),
                     comment = "stats::plot.acf"))
 Description: Extensions to 'lattice', providing new high-level
-  functions, methods for existing functions, panel functions, and a theme.
+    functions, methods for existing functions, panel functions, and a theme.
 Depends: R (>= 3.4.0), lattice
 Imports: grDevices, grid, gridExtra, latticeExtra, MASS, RColorBrewer,
         stats, utils
-Suggests: covr, forecast, knitr, rmarkdown, testthat, zoo
+Suggests: covr, forecast, knitr, rmarkdown, spelling, testthat, zoo
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 7.2.3
 URL: https://github.com/jolars/tactile
 BugReports: https://github.com/jolars/tactile/issues
 VignetteBuilder: knitr
+Language: en-US
 NeedsCompilation: no
-Packaged: 2018-04-23 16:31:53 UTC; jolars
+Packaged: 2023-05-24 10:11:18 UTC; gerd-jln
 Author: Johan Larsson [aut, cre] (<https://orcid.org/0000-0002-4029-5945>),
   Deepayan Sarkar [ctb, cph] (lattice),
   Brian Ripley [ctb] (stats::plot.acf)
 Maintainer: Johan Larsson <johanlarsson@outlook.com>
 Repository: CRAN
-Date/Publication: 2018-04-23 16:45:09 UTC
+Date/Publication: 2023-05-24 10:50:02 UTC
