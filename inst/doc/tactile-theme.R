@@ -4,12 +4,12 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ---- fig.show = "hold", fig.width = 6, fig.height = 4------------------------
+## ----fig.show = "hold", fig.width = 6, fig.height = 4-------------------------
 library(tactile)
 show.settings()
 show.settings(tactile.theme())
 
-## ---- fig.width = 6, fig.height = 4.5-----------------------------------------
+## ----fig.width = 6, fig.height = 4.5------------------------------------------
 set.seed(0)
 
 ## create a plot to demonstrate graphical settings
@@ -36,7 +36,7 @@ obj <- update(
 ## draw with default theme
 obj
 
-## ---- fig.width = 6, fig.height = 4.5-----------------------------------------
+## ----fig.width = 6, fig.height = 4.5------------------------------------------
 ## draw with tactile.theme()
 update(obj, par.settings = tactile.theme())
 
